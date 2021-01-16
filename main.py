@@ -12,34 +12,31 @@ class MyWidget(QMainWindow):
         super().__init__()
         self.initUI()
         self.f = False
+        self.n = False
 
     def initUI(self):
         uic.loadUi("okruzhnost.ui", self)
-        self.f = False
-        self.pushButton.clicked.connect(self.do)
-
-    def do(self):
-        self.f = True
+        self.do_paint = False
+        self.pushButton.clicked.connect(self.paint)
 
     def paintEvent(self, event):
-        if self.f:
-            # Создаем объект QPainter для рисования
+        if self.do_paint:
             qp = QPainter()
-            # Начинаем процесс рисования
             qp.begin(self)
             self.draw_flag(qp)
-            # Завершаем рисование
             qp.end()
-            self.f = False
+
+    def paint(self):
+        self.do_paint = True
+        self.repaint()
 
     def draw_flag(self, qp):
         x = random.randint(1, 300)
         y = random.randint(1, 300)
         a = random.randint(1, 300)
-        print(x, y, a)
-        #qp.setBrush(QColor(256, 50, 50))
-        qp.drawRect(x, y, a, a)
-        self.update()
+        qp.setPen(QColor(255, 255, 0))
+        qp.drawEllipse(x, y, a, a)
+
 
 
 if __name__ == '__main__':
