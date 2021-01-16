@@ -13,8 +13,12 @@ class Example(QWidget):
         self.initUI()
 
     def initUI(self):
-        uic.loadUi("okruzhnosti.ui", self)
+        uic.loadUi("okruzhnost.ui", self)
         self.f = False
+        self.pushButton.clicked.connect(self.do)
+
+    def do(self):
+        set.f = True
 
 
     def paintEvent(self, event):
@@ -26,6 +30,7 @@ class Example(QWidget):
             self.draw_flag(qp)
             # Завершаем рисование
             qp.end()
+            self.f = False
 
     def draw_flag(self, qp):
         pass
